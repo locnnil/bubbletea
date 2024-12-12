@@ -28,6 +28,7 @@ import (
 
 	"github.com/charmbracelet/colorprofile"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/charmbracelet/x/input"
 	"github.com/charmbracelet/x/term"
 	"golang.org/x/sync/errgroup"
 )
@@ -191,7 +192,7 @@ type Program struct {
 	// ttyInput is null if input is not a TTY.
 	ttyInput              term.File
 	previousTtyInputState *term.State
-	inputReader           *driver
+	inputReader           *input.Reader
 	traceInput            bool // true if input should be traced
 	readLoopDone          chan struct{}
 
@@ -449,7 +450,7 @@ func (p *Program) eventLoop(model Model, cmds chan Cmd) (Model, error) {
 
 			case modeReportMsg:
 				switch msg.Mode {
-				case int(ansi.GraphemeClusteringMode):
+				case ansi.GraphemeClusteringMode:
 					// 1 means mode is set (see DECRPM).
 					p.modes[ansi.GraphemeClusteringMode] = msg.Value == 1 || msg.Value == 3
 				}
@@ -723,12 +724,12 @@ func (p *Program) Run() (Model, error) {
 			return p.initialModel, err
 		}
 
-		// Send the initial size to the program.
-		go p.Send(WindowSizeMsg{
-			Width:  w,
-			Height: h,
-		})
+		var resizeMsg WindowSizeMsg
+		resizeMsg.Width = w
+		resizeMsg.Height = h
 
+		// Send the initial size to the program.
+		go p.Send(resizeMsg)
 		p.renderer.update(WindowSizeMsg{Width: w, Height: h})
 	}
 
