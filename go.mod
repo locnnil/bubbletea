@@ -5,8 +5,8 @@ go 1.18
 require (
 	github.com/charmbracelet/colorprofile v0.1.9
 	github.com/charmbracelet/x/ansi v0.6.0
-	github.com/charmbracelet/x/cellbuf v0.0.6
-	github.com/charmbracelet/x/input v0.2.1-0.20241210230033-45c33cb7b57a
+	github.com/charmbracelet/x/cellbuf v0.0.7-0.20241212022319-e366fd0098cb
+	github.com/charmbracelet/x/input v0.3.0
 	github.com/charmbracelet/x/term v0.2.1
 	github.com/muesli/cancelreader v0.2.2
 	golang.org/x/sync v0.9.0
@@ -14,7 +14,6 @@ require (
 )
 
 require (
-	github.com/charmbracelet/x/vt v0.0.0-20241113152101-0af7d04e9f32 // indirect
 	github.com/charmbracelet/x/wcwidth v0.0.0-20241113152101-0af7d04e9f32 // indirect
 	github.com/charmbracelet/x/windows v0.2.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
